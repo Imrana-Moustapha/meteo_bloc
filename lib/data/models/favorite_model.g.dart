@@ -1,56 +1,47 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'city_model.dart';
+part of 'favorite_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class CityModelAdapter extends TypeAdapter<CityModel> {
+class FavoriteModelAdapter extends TypeAdapter<FavoriteModel> {
   @override
   final int typeId = 2;
 
   @override
-  CityModel read(BinaryReader reader) {
+  FavoriteModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return CityModel(
-      id: fields[0] as String,
-      name: fields[1] as String,
+    return FavoriteModel(
+      cityId: fields[0] as String,
+      cityName: fields[1] as String,
       country: fields[2] as String,
-      state: fields[3] as String?,
-      latitude: fields[4] as double,
-      longitude: fields[5] as double,
-      population: fields[6] as int,
-      isFavorite: fields[7] as bool,
-      lastSearched: fields[8] as DateTime?,
+      lat: fields[3] as double,
+      lon: fields[4] as double,
+      addedAt: fields[5] as DateTime,
     );
   }
 
   @override
-  void write(BinaryWriter writer, CityModel obj) {
+  void write(BinaryWriter writer, FavoriteModel obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(6)
       ..writeByte(0)
-      ..write(obj.id)
+      ..write(obj.cityId)
       ..writeByte(1)
-      ..write(obj.name)
+      ..write(obj.cityName)
       ..writeByte(2)
       ..write(obj.country)
       ..writeByte(3)
-      ..write(obj.state)
+      ..write(obj.lat)
       ..writeByte(4)
-      ..write(obj.latitude)
+      ..write(obj.lon)
       ..writeByte(5)
-      ..write(obj.longitude)
-      ..writeByte(6)
-      ..write(obj.population)
-      ..writeByte(7)
-      ..write(obj.isFavorite)
-      ..writeByte(8)
-      ..write(obj.lastSearched);
+      ..write(obj.addedAt);
   }
 
   @override
@@ -59,7 +50,7 @@ class CityModelAdapter extends TypeAdapter<CityModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CityModelAdapter &&
+      other is FavoriteModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

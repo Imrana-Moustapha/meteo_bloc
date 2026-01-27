@@ -18,65 +18,32 @@ class WeatherModelAdapter extends TypeAdapter<WeatherModel> {
     };
     return WeatherModel(
       cityName: fields[0] as String,
-      country: fields[1] as String,
-      temperature: fields[2] as double,
-      feelsLike: fields[3] as double,
+      temperature: fields[1] as double,
+      condition: fields[2] as String,
+      icon: fields[3] as String,
       humidity: fields[4] as int,
       windSpeed: fields[5] as double,
-      windDegree: fields[6] as int,
-      pressure: fields[7] as int,
-      description: fields[8] as String,
-      iconCode: fields[9] as String,
-      conditionId: fields[10] as int,
-      tempMin: fields[11] as double?,
-      tempMax: fields[12] as double?,
-      visibility: fields[13] as int?,
-      sunrise: fields[14] as int?,
-      sunset: fields[15] as int?,
-      cloudiness: fields[16] as int?,
-      lastUpdated: fields[17] as DateTime,
+      lastUpdated: fields[6] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, WeatherModel obj) {
     writer
-      ..writeByte(18)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.cityName)
       ..writeByte(1)
-      ..write(obj.country)
-      ..writeByte(2)
       ..write(obj.temperature)
+      ..writeByte(2)
+      ..write(obj.condition)
       ..writeByte(3)
-      ..write(obj.feelsLike)
+      ..write(obj.icon)
       ..writeByte(4)
       ..write(obj.humidity)
       ..writeByte(5)
       ..write(obj.windSpeed)
       ..writeByte(6)
-      ..write(obj.windDegree)
-      ..writeByte(7)
-      ..write(obj.pressure)
-      ..writeByte(8)
-      ..write(obj.description)
-      ..writeByte(9)
-      ..write(obj.iconCode)
-      ..writeByte(10)
-      ..write(obj.conditionId)
-      ..writeByte(11)
-      ..write(obj.tempMin)
-      ..writeByte(12)
-      ..write(obj.tempMax)
-      ..writeByte(13)
-      ..write(obj.visibility)
-      ..writeByte(14)
-      ..write(obj.sunrise)
-      ..writeByte(15)
-      ..write(obj.sunset)
-      ..writeByte(16)
-      ..write(obj.cloudiness)
-      ..writeByte(17)
       ..write(obj.lastUpdated);
   }
 
