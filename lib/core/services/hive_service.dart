@@ -13,12 +13,10 @@ class HiveService {
       await initForMobile();
     }
     
-    // Enregistrer les adaptateurs
     Hive.registerAdapter(WeatherModelAdapter());
     Hive.registerAdapter(FavoriteModelAdapter());
     Hive.registerAdapter(ForecastModelAdapter());
     
-    // Ouvrir les boîtes
     await Hive.openBox<WeatherModel>('weather_cache');
     await Hive.openBox<FavoriteModel>('favorites');
     await Hive.openBox('settings');

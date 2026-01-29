@@ -200,7 +200,7 @@ with SingleTickerProviderStateMixin {
               right: 0,
               child: Center(
                 child: Text(
-                  '© 2024 WeatherApp',
+                  '© 2026 WeatherApp',
                   style: TextStyle(
                     color: Colors.white.withOpacity(0.7),
                     fontSize: 14,

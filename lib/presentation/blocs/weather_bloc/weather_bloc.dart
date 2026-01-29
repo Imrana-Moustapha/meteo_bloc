@@ -10,7 +10,6 @@ part 'weather_state.dart';
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final WeatherRepository weatherRepository;
   
-  // Ville par défaut
   static const String defaultCity = 'Niger';
   
   WeatherBloc(this.weatherRepository) : super(WeatherInitialState()) {
@@ -32,7 +31,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     emit(WeatherLoadingState());
     
     try {
-      final city = event.cityName ?? defaultCity; // ← Niger par défaut
+      final city = event.cityName ?? defaultCity;
       final weather = await weatherRepository.getCurrentWeather(cityName: city);
       emit(WeatherLoadedState(weather: weather));
     } catch (e) {
@@ -44,7 +43,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     RefreshWeatherEvent event,
     Emitter<WeatherState> emit,
   ) async {
-    // Garder les données existantes pendant le rafraîchissement
     if (state is WeatherLoadedState) {
       final currentState = state as WeatherLoadedState;
       emit(WeatherRefreshingState(
@@ -54,7 +52,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     }
     
     try {
-      final city = event.cityName ?? defaultCity; // ← Niger par défaut
+      final city = event.cityName ?? defaultCity; 
       final weather = await weatherRepository.getCurrentWeather(cityName: city);
       emit(WeatherLoadedState(weather: weather));
     } catch (e) {
@@ -69,9 +67,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     emit(WeatherLoadingState());
     
     try {
-      final city = event.cityName ?? defaultCity; // ← Niger par défaut
+      final city = event.cityName ?? defaultCity; 
       
-      // Charger en parallèle la météo actuelle et les prévisions
       final weatherFuture = weatherRepository.getCurrentWeather(cityName: city);
       final forecastsFuture = weatherRepository.getForecast(cityName: city);
       
@@ -88,7 +85,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     }
   }
   
-  // Méthode utilitaire pour charger Niger par défaut
   void fetchDefaultWeather() {
     add(FetchWeatherEvent(cityName: defaultCity));
   }

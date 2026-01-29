@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meteo/presentation/bloc/favorite_bloc/favorite_bloc.dart';
+import 'package:meteo/presentation/blocs/favorite_bloc/favorite_bloc.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
@@ -18,7 +18,7 @@ class FavoritesScreen extends StatelessWidget {
       body: BlocBuilder<FavoriteBloc, FavoriteState>(
         builder: (context, state) {
           if (state is FavoriteLoadingState) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: const Text('Chargement des favoris...'));
           }
           
           if (state is FavoriteErrorState) {
