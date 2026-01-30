@@ -140,7 +140,6 @@ flutter run
 ### Blocs principaux
 ```dart
 WeatherBloc          # Gestion des données météo
-<!-- LocationBloc    # Gestion de la géolocalisation -->
 FavoritesBloc        # Gestion des favoris
 SettingsBloc         # Gestion des paramètres
 <!-- ThemeBloc       # Gestion du thème -->
