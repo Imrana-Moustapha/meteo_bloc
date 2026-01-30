@@ -36,7 +36,7 @@ class WeatherContent extends StatelessWidget {
           
           const SizedBox(height: 20),
           
-          _buildRefreshButton(context),
+          // _buildRefreshButton(context),
           
           const SizedBox(height: 20),
         ],
@@ -199,22 +199,22 @@ class WeatherContent extends StatelessWidget {
     );
   }
 
-  Widget _buildRefreshButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: ElevatedButton.icon(
-        icon: const Icon(Icons.refresh),
-        label: const Text('Rafraîchir les données'),
-        onPressed: onRefresh,
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(double.infinity, 50),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _buildRefreshButton(BuildContext context) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 16.0),
+  //     child: ElevatedButton.icon(
+  //       icon: const Icon(Icons.refresh),
+  //       label: const Text('Rafraîchir les données'),
+  //       onPressed: onRefresh,
+  //       style: ElevatedButton.styleFrom(
+  //         minimumSize: const Size(double.infinity, 50),
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(25),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   String _formatTime(DateTime date) {
     return '${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';

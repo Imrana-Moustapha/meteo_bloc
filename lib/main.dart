@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:meteo/core/services/hive_service.dart';
 import 'package:meteo/core/themes/app_themes.dart';
 import 'package:meteo/data/repositories/favorite_repository.dart';
 import 'package:meteo/data/repositories/weather_repository.dart';
 import 'package:meteo/presentation/blocs/favorite_bloc/favorite_bloc.dart';
 import 'package:meteo/presentation/blocs/weather_bloc/weather_bloc.dart';
+import 'package:meteo/presentation/cubit/local_cubit/loacal_cubit.dart';
+import 'package:meteo/presentation/cubit/local_cubit/loacal_state.dart';
 import 'package:meteo/presentation/cubit/theme_cubit/theme_cubit.dart';
 import 'package:meteo/presentation/cubit/theme_cubit/theme_state.dart';
 import 'package:meteo/presentation/screens/favorie_screen.dart';
@@ -35,27 +38,45 @@ class MyApp extends StatelessWidget {
           create: (context) => ThemeCubit(),
         ),
         BlocProvider(
+          create: (context) => LocaleCubit(),
+        ),
+        BlocProvider(
           create: (context) => WeatherBloc(WeatherRepository()),
         ),
         BlocProvider(
           create: (context) => FavoriteBloc(FavoriteRepository()),
         ),
       ],
-      child: BlocBuilder<ThemeCubit, ThemeState>(
-        builder: (context, themeState) {
-          return MaterialApp(
-            title: 'Metéo',
-            theme: AppThemes.lightTheme,
-            darkTheme: AppThemes.darkTheme,
-            themeMode: _getThemeMode(themeState),
-            initialRoute: '/',
-            routes: {
-              '/': (context) => const SplashScreen(),
-              '/home': (context) => const HomeScreen(), 
-              '/favorites': (context) => const FavoritesScreen(),
-              '/settings': (context) => const SettingsScreen(), 
+      child: BlocBuilder<LocaleCubit, LocaleState>(
+        builder: (context, localeState) {
+          return BlocBuilder<ThemeCubit, ThemeState>(
+            builder: (context, themeState) {
+              return MaterialApp(
+                title: 'Metéo',
+                theme: AppThemes.lightTheme,
+                darkTheme: AppThemes.darkTheme,
+                themeMode: _getThemeMode(themeState),
+                locale: Locale(localeState.languageCode),
+                supportedLocales: const [
+                  Locale('fr', 'FR'), // Français
+                  Locale('en', 'US'), // Anglais
+                  Locale('ar', 'SA'), // Arabe
+                ],
+                localizationsDelegates: const [
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                initialRoute: '/',
+                routes: {
+                  '/': (context) => const SplashScreen(),
+                  '/home': (context) => const HomeScreen(), 
+                  '/favorites': (context) => const FavoritesScreen(),
+                  '/settings': (context) => const SettingsScreen(), 
+                },
+                debugShowCheckedModeBanner: false,
+              );
             },
-            debugShowCheckedModeBanner: false,
           );
         },
       ),

@@ -21,9 +21,11 @@ class _HomeContentScreenState extends State<HomeContentScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         final weatherBloc = context.read<WeatherBloc>();
-        
+
         if (weatherBloc.state is! WeatherLoadedState) {
-          weatherBloc.add(FetchWeatherWithForecastEvent(cityName: _currentCity));
+          weatherBloc.add(
+            FetchWeatherWithForecastEvent(cityName: _currentCity),
+          );
         }
       }
     });
@@ -49,14 +51,14 @@ class _HomeContentScreenState extends State<HomeContentScreen> {
               onSearch: (city) => _searchWeather(context, city),
               onReturnToDefault: () => _returnToDefaultCity(context),
             ),
-            
+
             const SizedBox(height: 20),
-            
+
             Expanded(
               child: BlocBuilder<WeatherBloc, WeatherState>(
                 builder: (context, state) {
                   return StateWidgets.build(
-                    context: context, 
+                    context: context,
                     state: state,
                     currentCity: _currentCity,
                     onRefresh: () => _refreshWeather(context),
@@ -76,8 +78,10 @@ class _HomeContentScreenState extends State<HomeContentScreen> {
       _currentCity = city.trim();
       _cityController.clear();
       FocusScope.of(context).unfocus();
-      
-      context.read<WeatherBloc>().add(FetchWeatherWithForecastEvent(cityName: _currentCity));
+
+      context.read<WeatherBloc>().add(
+        FetchWeatherWithForecastEvent(cityName: _currentCity),
+      );
     }
   }
 
@@ -86,8 +90,10 @@ class _HomeContentScreenState extends State<HomeContentScreen> {
       _currentCity = "Niger";
       _cityController.clear();
     });
-    
-    context.read<WeatherBloc>().add(FetchWeatherWithForecastEvent(cityName: "Niger"));
+
+    context.read<WeatherBloc>().add(
+      FetchWeatherWithForecastEvent(cityName: "Niger"),
+    );
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Retour à Niger'),
@@ -97,6 +103,8 @@ class _HomeContentScreenState extends State<HomeContentScreen> {
   }
 
   void _refreshWeather(BuildContext context) {
-    context.read<WeatherBloc>().add(RefreshWeatherEvent(cityName: _currentCity));
+    context.read<WeatherBloc>().add(
+      RefreshWeatherEvent(cityName: _currentCity),
+    );
   }
 }

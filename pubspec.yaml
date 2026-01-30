@@ -52,6 +52,7 @@ dependencies:
   geolocator: ^14.0.2
   dartz: ^0.10.1
   shared_preferences: ^2.5.4
+  easy_localization: ^3.0.8
   
 
 dev_dependencies:

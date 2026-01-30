@@ -4,10 +4,7 @@ import 'package:meteo/data/models/forecast_model.dart';
 class ForecastSection extends StatelessWidget {
   final List<ForecastModel> forecasts;
 
-  const ForecastSection({
-    super.key,
-    required this.forecasts,
-  });
+  const ForecastSection({super.key, required this.forecasts});
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +13,7 @@ class ForecastSection extends StatelessWidget {
 
     return Card(
       elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -26,19 +21,20 @@ class ForecastSection extends StatelessWidget {
           children: [
             const Text(
               'Prévisions',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 15),
-            
+
             Column(
               children: days.map((day) {
                 final dayForecasts = dailyForecasts[day]!;
-                final maxTemp = dayForecasts.map((f) => f.tempMax).reduce((a, b) => a > b ? a : b);
-                final minTemp = dayForecasts.map((f) => f.tempMin).reduce((a, b) => a < b ? a : b);
-                
+                final maxTemp = dayForecasts
+                    .map((f) => f.tempMax)
+                    .reduce((a, b) => a > b ? a : b);
+                final minTemp = dayForecasts
+                    .map((f) => f.tempMin)
+                    .reduce((a, b) => a < b ? a : b);
+
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: Row(
@@ -47,9 +43,7 @@ class ForecastSection extends StatelessWidget {
                       Expanded(
                         child: Text(
                           day,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: const TextStyle(fontWeight: FontWeight.w500),
                         ),
                       ),
                       if (dayForecasts.isNotEmpty)
@@ -61,9 +55,7 @@ class ForecastSection extends StatelessWidget {
                       const SizedBox(width: 10),
                       Text(
                         '${maxTemp.toStringAsFixed(0)}° / ${minTemp.toStringAsFixed(0)}°',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -76,15 +68,17 @@ class ForecastSection extends StatelessWidget {
     );
   }
 
-  Map<String, List<ForecastModel>> _groupForecastsByDay(List<ForecastModel> forecasts) {
+  Map<String, List<ForecastModel>> _groupForecastsByDay(
+    List<ForecastModel> forecasts,
+  ) {
     final Map<String, List<ForecastModel>> dailyForecasts = {};
-    
+
     for (final forecast in forecasts.take(10)) {
       final date = _formatDate(forecast.date);
       dailyForecasts[date] ??= [];
       dailyForecasts[date]!.add(forecast);
     }
-    
+
     return dailyForecasts;
   }
 
@@ -92,10 +86,10 @@ class ForecastSection extends StatelessWidget {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final forecastDay = DateTime(date.year, date.month, date.day);
-    
+
     if (forecastDay == today) return 'Aujourd\'hui';
     if (forecastDay == today.add(const Duration(days: 1))) return 'Demain';
-    
+
     const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
     return days[date.weekday - 1];
   }

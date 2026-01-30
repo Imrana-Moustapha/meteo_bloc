@@ -1,41 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:meteo/data/models/favorite_model.dart';
-import 'package:meteo/data/models/weather_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meteo/presentation/cubit/local_cubit/loacal_cubit.dart';
+import 'package:meteo/presentation/cubit/local_cubit/loacal_state.dart';
+import 'package:meteo/presentation/cubit/theme_cubit/theme_cubit.dart';
+import 'package:meteo/presentation/cubit/theme_cubit/theme_state.dart';
+import 'package:meteo/presentation/widgets/settings/theme_dialog.dart';
+import 'package:meteo/presentation/widgets/settings/language_dialog.dart';
+import 'package:meteo/presentation/widgets/settings/exit_confirmation_dialog.dart';
+import 'package:meteo/presentation/widgets/settings/settings_card.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
-  @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  bool _notifications = false;
-  String _temperatureUnit = 'celsius';
-  String _language = 'fr';
-
-  @override
-  void initState() {
-    super.initState();
-    _loadSettings();
+  String _getThemeName(ThemeModeType themeMode) {
+    switch (themeMode) {
+      case ThemeModeType.light:
+        return 'Clair';
+      case ThemeModeType.dark:
+        return 'Sombre';
+      case ThemeModeType.system:
+        return 'Système';
+    }
   }
 
-  Future<void> _loadSettings() async {
-    final settingsBox = Hive.box('settings');
-    
-    setState(() {
-      _notifications = settingsBox.get('notifications', defaultValue: false);
-      _temperatureUnit = settingsBox.get('temperatureUnit', defaultValue: 'celsius');
-      _language = settingsBox.get('language', defaultValue: 'fr');
-    });
+  String _getLanguageName(String languageCode) {
+    switch (languageCode) {
+      case 'fr':
+        return 'Français';
+      case 'en':
+        return 'English';
+      case 'ar':
+        return 'العربية';
+      default:
+        return 'Français';
+    }
   }
 
-  Future<void> _saveSettings() async {
-    final settingsBox = Hive.box('settings');
-    await settingsBox.put('notifications', _notifications);
-    await settingsBox.put('temperatureUnit', _temperatureUnit);
-    await settingsBox.put('language', _language);
+  void _showThemeDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => const ThemeDialog(),
+    );
+  }
+
+  void _showLanguageDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => const LanguageDialog(),
+    );
+  }
+
+  void _showExitConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => const ExitConfirmationDialog(),
+    );
   }
 
   @override
@@ -47,113 +66,74 @@ class _SettingsScreenState extends State<SettingsScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
+        actions: [
+          BlocBuilder<ThemeCubit, ThemeState>(
+            builder: (context, state) {
+              return IconButton(
+                icon: state.isDarkMode
+                    ? const Icon(Icons.light_mode)
+                    : const Icon(Icons.dark_mode),
+                onPressed: () {
+                  context.read<ThemeCubit>().toggleTheme();
+                },
+                tooltip: 'Changer le thème',
+              );
+            },
+          ),
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          SwitchListTile(
-            title: const Text('Notifications'),
-            value: _notifications,
-            onChanged: (value) {
-              setState(() {
-                _notifications = value;
-                _saveSettings();
-              });
-            },
-          ),
-          const Divider(),
-          ListTile(
-            title: const Text('Unité de température'),
-            subtitle: Text(_temperatureUnit == 'celsius' ? 'Celsius' : 'Fahrenheit'),
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text('Choisir une unité'),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ListTile(
-                          title: const Text('Celsius'),
-                          onTap: () {
-                            setState(() {
-                              _temperatureUnit = 'celsius';
-                              _saveSettings();
-                            });
-                            Navigator.pop(context);
-                          },
-                        ),
-                        ListTile(
-                          title: const Text('Fahrenheit'),
-                          onTap: () {
-                            setState(() {
-                              _temperatureUnit = 'fahrenheit';
-                              _saveSettings();
-                            });
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                },
+          // Section Thème
+          BlocBuilder<ThemeCubit, ThemeState>(
+            builder: (context, state) {
+              return SettingsCard(
+                icon: state.themeMode == ThemeModeType.dark
+                    ? Icons.nightlight_round
+                    : state.themeMode == ThemeModeType.light
+                        ? Icons.wb_sunny
+                        : Icons.settings,
+                title: 'Thème',
+                subtitle: _getThemeName(state.themeMode),
+                onTap: () => _showThemeDialog(context),
               );
             },
           ),
-          const Divider(),
-          ListTile(
-            title: const Text('Langue'),
-            subtitle: Text(_language == 'fr' ? 'Français' : 'Anglais'),
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text('Choisir une langue'),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ListTile(
-                          title: const Text('Français'),
-                          onTap: () {
-                            setState(() {
-                              _language = 'fr';
-                              _saveSettings();
-                            });
-                            Navigator.pop(context);
-                          },
-                        ),
-                        ListTile(
-                          title: const Text('Anglais'),
-                          onTap: () {
-                            setState(() {
-                              _language = 'en';
-                              _saveSettings();
-                            });
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                },
+
+          const SizedBox(height: 16),
+
+          // Section Langue
+          BlocBuilder<LocaleCubit, LocaleState>(
+            builder: (context, state) {
+              return SettingsCard(
+                icon: Icons.language,
+                title: 'Langue',
+                subtitle: _getLanguageName(state.languageCode),
+                onTap: () => _showLanguageDialog(context),
               );
             },
           ),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0),
-            child: ElevatedButton.icon(
-              icon: const Icon(Icons.delete),
-              label: const Text('Effacer le cache'),
-              onPressed: () {
-                Hive.box<FavoriteModel>('favorites').clear();
-                Hive.box<WeatherModel>('weather_cache').clear();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Cache effacé')),
-                );
-              },
+
+          const SizedBox(height: 16),
+
+          // Section Quitter l'application
+          SettingsCard(
+            icon: Icons.exit_to_app,
+            title: 'Quitter l\'application',
+            subtitle: 'Fermer l\'application',
+            iconColor: Colors.red,
+            textColor: Colors.red,
+            onTap: () => _showExitConfirmationDialog(context),
+          ),
+
+          const SizedBox(height: 20),
+
+          // Version
+          const Center(
+            child: Text(
+              'Version 1.0.0',
+              style: TextStyle(fontSize: 12, color: Colors.grey),
             ),
           ),
         ],
