@@ -59,7 +59,7 @@ dependencies:
   geolocator: ^10.1.0
 ```
 
-### 🔧 Dépendances de développement
+### Dépendances de développement
 ```yaml
 dev_dependencies:
   # Génération de code
@@ -70,8 +70,6 @@ dev_dependencies:
   bloc_test: ^9.1.4
   flutter_test: 
   
-  # Qualité de code
-  flutter_lints: ^3.0.1
 ```
 
 ##  Configuration
@@ -108,7 +106,7 @@ WEATHER_ICON_URL=https://openweathermap.org/img/wn
 ```bash
 # 1. Clonez le dépôt
 git clone <https://github.com/Imrana-Moustapha/meteo_bloc>
-cd weatherapp
+cd meteo_bloc
 
 # 2. Installez les dépendances
 flutter pub get
@@ -142,10 +140,10 @@ flutter run
 ### Blocs principaux
 ```dart
 WeatherBloc          # Gestion des données météo
-<!-- LocationBloc         # Gestion de la géolocalisation -->
+<!-- LocationBloc    # Gestion de la géolocalisation -->
 FavoritesBloc        # Gestion des favoris
 SettingsBloc         # Gestion des paramètres
-<!-- ThemeBloc            # Gestion du thème -->
+<!-- ThemeBloc       # Gestion du thème -->
 ```
 
 ### Processus
