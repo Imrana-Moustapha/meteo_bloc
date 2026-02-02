@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meteo/l10n/app_localizations.dart';
 import 'package:meteo/presentation/blocs/weather_bloc/weather_bloc.dart';
 import 'package:meteo/presentation/widgets/home/search_bar.dart';
 import 'package:meteo/presentation/widgets/home/state_widgets.dart';
@@ -86,6 +87,8 @@ class _HomeContentScreenState extends State<HomeContentScreen> {
   }
 
   void _returnToDefaultCity(BuildContext context) {
+    final t = AppLocalizations.of(context)!; // Initialisation des traductions
+    
     setState(() {
       _currentCity = "Niger";
       _cityController.clear();
@@ -94,10 +97,11 @@ class _HomeContentScreenState extends State<HomeContentScreen> {
     context.read<WeatherBloc>().add(
       FetchWeatherWithForecastEvent(cityName: "Niger"),
     );
+    
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Retour à Niger'),
-        duration: Duration(seconds: 1),
+      SnackBar(
+        content: Text('Retour à Niger'), // Tu peux créer une clé t.returnDefault si tu veux traduire ceci
+        duration: const Duration(seconds: 1),
       ),
     );
   }

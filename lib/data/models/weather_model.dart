@@ -34,4 +34,6 @@ class WeatherModel {
     required this.windSpeed,
     required this.lastUpdated,
   });
+
+  get description => null;
 }

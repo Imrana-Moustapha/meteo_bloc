@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meteo/presentation/cubit/theme_cubit/theme_cubit.dart';
 import 'package:meteo/presentation/cubit/theme_cubit/theme_state.dart';
+// Importation des traductions
+import 'package:meteo/l10n/app_localizations.dart'; 
 
 class ThemeDialog extends StatelessWidget {
   const ThemeDialog({super.key});
@@ -45,8 +47,11 @@ class ThemeDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Initialisation des traductions
+    final t = AppLocalizations.of(context)!;
+
     return AlertDialog(
-      title: const Text('Thème'),
+      title: Text(t.themeLabel), // "Thème" traduit
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -54,24 +59,24 @@ class ThemeDialog extends StatelessWidget {
             context,
             ThemeModeType.light,
             Icons.wb_sunny,
-            'Clair',
-            'Couleurs claires',
+            t.themeLight,          // "Clair" traduit
+            t.themeLightDesc,      // "Couleurs claires" traduit
           ),
           const Divider(height: 1),
           _buildThemeOption(
             context,
             ThemeModeType.dark,
             Icons.nightlight_round,
-            'Sombre',
-            'Couleurs sombres',
+            t.themeDark,           // "Sombre" traduit
+            t.themeDarkDesc,       // "Couleurs sombres" traduit
           ),
           const Divider(height: 1),
           _buildThemeOption(
             context,
             ThemeModeType.system,
             Icons.settings,
-            'Système',
-            'Suivre les paramètres du système',
+            t.themeSystem,         // "Système" traduit
+            t.themeSystemDesc,     // "Suivre les paramètres du système" traduit
           ),
         ],
       ),

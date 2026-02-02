@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:meteo/l10n/app_localizations.dart';
 
 class ExitConfirmationDialog extends StatelessWidget {
   const ExitConfirmationDialog({super.key});
@@ -11,15 +12,14 @@ class ExitConfirmationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text('Quitter l\'application'),
-      content: const Text(
-        'Êtes-vous sûr de vouloir quitter l\'application ?',
-      ),
+      title: Text(t.exitTitle),
+      content: Text(t.exitConfirmMessage),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Annuler'),
+          child: Text(t.cancel),
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -30,7 +30,7 @@ class ExitConfirmationDialog extends StatelessWidget {
             Navigator.pop(context);
             _exitApp(context);
           },
-          child: const Text('Quitter'),
+          child: Text(t.exitTitle),
         ),
       ],
     );

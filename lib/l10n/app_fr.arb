@@ -1,0 +1,106 @@
+{
+  "weatherNiger": "Météo Niger",
+  "weatherTitle": "Météo Actuelle",
+  "@weatherTitle": {
+    "description": "Titre de la section météo principale"
+  },
+  "temperature": "Température",
+  "@temperature": {
+    "description": "Label pour la température"
+  },
+  "description": "Ciel dégagé",
+  "@description": {
+    "description": "Description de l'état du ciel"
+  },
+  "humidity": "Humidité",
+  "@humidity": {
+    "description": "Label pour le taux d'humidité"
+  },
+  "settingsTitle": "Paramètres",
+  "@settingsTitle": {
+    "description": "Titre de la page des paramètres"
+  },
+  "themeLabel": "Thème",
+  "@themeLabel": {
+    "description": "Label pour le choix du thème"
+  },
+  "themeLight": "Clair",
+  "themeLightDesc": "Couleurs claires",
+  "themeDark": "Sombre",
+  "themeDarkDesc": "Couleurs sombres",
+  "themeSystem": "Système",
+  "themeSystemDesc": "Suivre les paramètres du système",
+  "languageLabel": "Langue",
+  "@languageLabel": {
+    "description": "Label pour le choix de la langue"
+  },
+  "chooseLanguage": "Choisir une langue",
+  "exitTitle": "Quitter l'application",
+  "exitSubtitle": "Fermer l'application",
+  "exitConfirmMessage": "Êtes-vous sûr de vouloir quitter l'application ?",
+  "cancel": "Annuler",
+  "searchHint": "Rechercher une ville...",
+  "@searchHint": {
+    "description": "Texte d'aide dans la barre de recherche"
+  },
+  "favoritesTitle": "Favoris",
+  "@favoritesTitle": {
+    "description": "Titre de la liste des favoris"
+  },
+  "aboutTooltip": "À propos",
+  "refreshTooltip": "Rafraîchir",
+  "@refreshTooltip": {
+    "description": "Bouton pour actualiser les données"
+  },
+  "loadingMessage": "Chargement de la météo...",
+  "returnDefaultTooltip": "Retour à la ville par défaut",
+  "windSpeed": "Vent",
+  "@windSpeed": {
+    "description": "Label pour la vitesse du vent"
+  },
+  "feelsLike": "Ressenti",
+  "@feelsLike": {
+    "description": "Label pour la température ressentie"
+  },
+  "forecastTitle": "Prévisions",
+  "@forecastTitle": {
+    "description": "Titre de la section prévisions"
+  },
+  "today": "Aujourd'hui",
+  "tomorrow": "Demain",
+  "view": "Voir",
+  "@view": {
+    "description": "Action pour voir les détails"
+  },
+  "lastUpdate": "Dernière mise à jour : {time}",
+  "@lastUpdate": {
+    "description": "Heure de la dernière synchronisation",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "addToFavorites": "Ajouter aux favoris",
+  "@addToFavorites": {
+    "description": "Bouton d'ajout en favoris"
+  },
+  "addedToFavorites": "{city} ajouté aux favoris",
+  "@addedToFavorites": {
+    "description": "Confirmation d'ajout",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "alreadyInFavorites": "{city} est déjà dans vos favoris",
+  "@alreadyInFavorites": {
+    "description": "Alerte si la ville existe déjà",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  }
+}

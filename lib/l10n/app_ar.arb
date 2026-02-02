@@ -1,0 +1,106 @@
+{
+  "weatherNiger": "طقس النيجر",
+  "weatherTitle": "الطقس الحالي",
+  "@weatherTitle": {
+    "description": "عنوان قسم الطقس الرئيسي"
+  },
+  "temperature": "درجة الحرارة",
+  "@temperature": {
+    "description": "ملصق درجة الحرارة"
+  },
+  "description": "سماء صافية",
+  "@description": {
+    "description": "وصف حالة السماء"
+  },
+  "humidity": "الرطوبة",
+  "@humidity": {
+    "description": "ملصق مستوى الرطوبة"
+  },
+  "settingsTitle": "الإعدادات",
+  "@settingsTitle": {
+    "description": "عنوان صفحة الإعدادات"
+  },
+  "themeLabel": "المظهر",
+  "@themeLabel": {
+    "description": "ملصق اختيار المظهر"
+  },
+  "themeLight": "فاتح",
+  "themeLightDesc": "ألوان فاتحة",
+  "themeDark": "داكن",
+  "themeDarkDesc": "ألوان داكنة",
+  "themeSystem": "النظام",
+  "themeSystemDesc": "متابعة إعدادات النظام",
+  "languageLabel": "اللغة",
+  "@languageLabel": {
+    "description": "ملصق اختيار اللغة"
+  },
+  "chooseLanguage": "اختر اللغة",
+  "exitTitle": "خروج من التطبيق",
+  "exitSubtitle": "إغلاق التطبيق",
+  "exitConfirmMessage": "هل أنت متأكد أنك تريد الخروج من التطبيق؟",
+  "cancel": "إلغاء",
+  "searchHint": "البحث عن مدينة...",
+  "@searchHint": {
+    "description": "نص المساعدة في شريط البحث"
+  },
+  "favoritesTitle": "المفضلات",
+  "@favoritesTitle": {
+    "description": "عنوان قائمة المفضلات"
+  },
+  "aboutTooltip": "حول",
+  "refreshTooltip": "تحديث",
+  "@refreshTooltip": {
+    "description": "زر لتحديث البيانات"
+  },
+  "loadingMessage": "جارٍ تحميل حالة الطقس...",
+  "returnDefaultTooltip": "العودة إلى المدينة الافتراضية",
+  "windSpeed": "الرياح",
+  "@windSpeed": {
+    "description": "ملصق سرعة الرياح"
+  },
+  "feelsLike": "درجة الحرارة المحسوسة",
+  "@feelsLike": {
+    "description": "ملصق درجة الحرارة المحسوسة"
+  },
+  "forecastTitle": "التوقعات",
+  "@forecastTitle": {
+    "description": "عنوان قسم التوقعات"
+  },
+  "today": "اليوم",
+  "tomorrow": "غداً",
+  "view": "عرض",
+  "@view": {
+    "description": "إجراء لعرض التفاصيل"
+  },
+  "lastUpdate": "آخر تحديث: {time}",
+  "@lastUpdate": {
+    "description": "وقت آخر مزامنة",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "addToFavorites": "إضافة إلى المفضلات",
+  "@addToFavorites": {
+    "description": "زر الإضافة إلى المفضلات"
+  },
+  "addedToFavorites": "تم إضافة {city} إلى المفضلات",
+  "@addedToFavorites": {
+    "description": "تأكيد الإضافة",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "alreadyInFavorites": "{city} موجود بالفعل في المفضلات",
+  "@alreadyInFavorites": {
+    "description": "تنبيه إذا كانت المدينة موجودة بالفعل",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  }
+}

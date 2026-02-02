@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meteo/presentation/cubit/local_cubit/loacal_cubit.dart';
-import 'package:meteo/presentation/cubit/local_cubit/loacal_state.dart';
+import 'package:meteo/presentation/cubit/local_cubit/local_cubit.dart';
+import 'package:meteo/presentation/cubit/local_cubit/local_state.dart';
+
 
 class LanguageDialog extends StatelessWidget {
   const LanguageDialog({super.key});
@@ -23,7 +24,7 @@ class LanguageDialog extends StatelessWidget {
               ? Icon(Icons.check, color: Theme.of(context).primaryColor)
               : null,
           onTap: () {
-            context.read<LocaleCubit>().changeLocale(languageCode);
+            context.read<LocaleCubit>().changeLanguage(languageCode);
             Navigator.pop(context);
           },
         );

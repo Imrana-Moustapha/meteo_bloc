@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meteo/data/models/forecast_model.dart';
+import 'package:meteo/l10n/app_localizations.dart'; // Import pour les traductions
 
 class ForecastSection extends StatelessWidget {
   final List<ForecastModel> forecasts;
@@ -10,6 +11,7 @@ class ForecastSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final dailyForecasts = _groupForecastsByDay(forecasts);
     final days = dailyForecasts.keys.take(5).toList();
+    final t = AppLocalizations.of(context)!; // Initialisation des traductions
 
     return Card(
       elevation: 4,
@@ -19,9 +21,9 @@ class ForecastSection extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Prévisions',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              t.weatherTitle, // Utilise la clé du fichier .arb (par ex: "Prévisions" ou "Forecast")
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 15),
 
@@ -40,10 +42,11 @@ class ForecastSection extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
+                      SizedBox(
+                        width: 80,
                         child: Text(
                           day,
-                          style: const TextStyle(fontWeight: FontWeight.w500),
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ),
                       if (dayForecasts.isNotEmpty)

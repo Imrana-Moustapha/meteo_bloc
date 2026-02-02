@@ -1,0 +1,106 @@
+{
+  "weatherNiger": "Niger Weather",
+  "weatherTitle": "Current Weather",
+  "@weatherTitle": {
+    "description": "Main weather section title"
+  },
+  "temperature": "Temperature",
+  "@temperature": {
+    "description": "Temperature label"
+  },
+  "description": "Clear sky",
+  "@description": {
+    "description": "Sky condition description"
+  },
+  "humidity": "Humidity",
+  "@humidity": {
+    "description": "Humidity level label"
+  },
+  "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "Settings page title"
+  },
+  "themeLabel": "Theme",
+  "@themeLabel": {
+    "description": "Theme selection label"
+  },
+  "themeLight": "Light",
+  "themeLightDesc": "Light colors",
+  "themeDark": "Dark",
+  "themeDarkDesc": "Dark colors",
+  "themeSystem": "System",
+  "themeSystemDesc": "Follow system settings",
+  "languageLabel": "Language",
+  "@languageLabel": {
+    "description": "Language selection label"
+  },
+  "chooseLanguage": "Choose a language",
+  "exitTitle": "Exit Application",
+  "exitSubtitle": "Close the app",
+  "exitConfirmMessage": "Are you sure you want to exit the application?",
+  "cancel": "Cancel",
+  "searchHint": "Search for a city...",
+  "@searchHint": {
+    "description": "Hint text in search bar"
+  },
+  "favoritesTitle": "Favorites",
+  "@favoritesTitle": {
+    "description": "Favorites list title"
+  },
+  "aboutTooltip": "About",
+  "refreshTooltip": "Refresh",
+  "@refreshTooltip": {
+    "description": "Button to refresh data"
+  },
+  "loadingMessage": "Loading weather...",
+  "returnDefaultTooltip": "Return to default city",
+  "windSpeed": "Wind",
+  "@windSpeed": {
+    "description": "Wind speed label"
+  },
+  "feelsLike": "Feels like",
+  "@feelsLike": {
+    "description": "Feels like temperature label"
+  },
+  "forecastTitle": "Forecast",
+  "@forecastTitle": {
+    "description": "Forecast section title"
+  },
+  "today": "Today",
+  "tomorrow": "Tomorrow",
+  "view": "View",
+  "@view": {
+    "description": "Action to view details"
+  },
+  "lastUpdate": "Last update: {time}",
+  "@lastUpdate": {
+    "description": "Time of last sync",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "addToFavorites": "Add to favorites",
+  "@addToFavorites": {
+    "description": "Add to favorites button"
+  },
+  "addedToFavorites": "{city} added to favorites",
+  "@addedToFavorites": {
+    "description": "Confirmation of addition",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "alreadyInFavorites": "{city} is already in favorites",
+  "@alreadyInFavorites": {
+    "description": "Alert if city already exists",
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  }
+}

@@ -26,6 +26,7 @@ class SettingsCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: ListTile(
+        // Utilise automatiquement l'inversion en mode RTL
         leading: Icon(icon, color: iconColor ?? Theme.of(context).primaryColor),
         title: Text(
           title,
@@ -35,7 +36,8 @@ class SettingsCard extends StatelessWidget {
           ),
         ),
         subtitle: Text(subtitle),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+        // Utilisation de l'icône adaptative pour la direction (RTL/LTR)
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16), 
         onTap: onTap,
       ),
     );
