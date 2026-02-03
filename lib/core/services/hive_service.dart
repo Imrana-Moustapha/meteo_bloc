@@ -1,8 +1,8 @@
 import 'package:path_provider/path_provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:meteo/data/models/favorite_model.dart';
-import 'package:meteo/data/models/forecast_model.dart';
-import 'package:meteo/data/models/weather_model.dart';
+import 'package:meteo/favorite/data/model/favorite_model.dart';
+import 'package:meteo/forecast/data/models/forecast_model.dart';
+import 'package:meteo/weather/data/models/weather_model.dart';
 import 'package:flutter/foundation.dart';
 
 class HiveService {

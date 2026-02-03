@@ -6,12 +6,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 // Importations des services et repositories
 import 'package:meteo/core/services/hive_service.dart';
 import 'package:meteo/core/themes/app_themes.dart';
-import 'package:meteo/data/repositories/favorite_repository.dart';
-import 'package:meteo/data/repositories/weather_repository.dart';
+import 'package:meteo/favorite/data/repositories/favorite_repository.dart';
+import 'package:meteo/weather/data/repositories/weather_repository.dart';
 
 // Importations des Blocs et Cubits
-import 'package:meteo/presentation/blocs/favorite_bloc/favorite_bloc.dart';
-import 'package:meteo/presentation/blocs/weather_bloc/weather_bloc.dart';
+import 'package:meteo/favorite/presentation/blocs/favorite_bloc/favorite_bloc.dart';
+import 'package:meteo/weather/presentation/blocs/weather_bloc/weather_bloc.dart';
 import 'package:meteo/presentation/cubit/local_cubit/local_cubit.dart';
 import 'package:meteo/presentation/cubit/local_cubit/local_state.dart';
 import 'package:meteo/presentation/cubit/theme_cubit/theme_cubit.dart';
@@ -21,9 +21,9 @@ import 'package:meteo/presentation/cubit/theme_cubit/theme_state.dart';
 import 'package:meteo/l10n/app_localizations.dart'; 
 
 // Importations des écrans
-import 'package:meteo/presentation/screens/favorie_screen.dart';
-import 'package:meteo/presentation/screens/home_screen.dart';
-import 'package:meteo/presentation/screens/setting_screen.dart';
+import 'package:meteo/favorite/presentation/screens/favorie_screen.dart';
+import 'package:meteo/home/presentation/screens/home_screen.dart';
+import 'package:meteo/settings/presentation/screens/setting_screen.dart';
 import 'package:meteo/presentation/screens/splash_screen.dart';
 
 void main() async {
