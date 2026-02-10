@@ -1,20 +1,51 @@
 import 'dart:convert';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:meteo/core/config/api_config.dart';
 import 'package:meteo/forecast/data/models/forecast_model.dart';
 import 'package:meteo/weather/data/models/weather_model.dart';
 
 class WeatherRepository {
-  static const String defaultCity = 'Niger';
-  
-  Future<WeatherModel> getCurrentWeather({String? cityName}) async {
-    final city = cityName ?? defaultCity;
+  static const String defaultCity = 'Niamey';
+
+  // --- RÉCUPÉRATION DE LA POSITION ---
+  Future<Position?> _getCurrentPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) return null;
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) return null;
+    }
     
-    final response = await http.get(Uri.parse(ApiConfig.currentWeatherUrl(city)));
+    if (permission == LocationPermission.deniedForever) return null;
+
+    return await Geolocator.getCurrentPosition();
+  }
+
+  // --- MÉTÉO ACTUELLE ---
+  Future<WeatherModel> getCurrentWeather({String? cityName}) async {
+    String url;
+    
+    if (cityName == null) {
+      Position? position = await _getCurrentPosition();
+      if (position != null) {
+        url = ApiConfig.currentWeatherByLocationUrl(position.latitude, position.longitude);
+      } else {
+        url = ApiConfig.currentWeatherUrl(defaultCity);
+      }
+    } else {
+      url = ApiConfig.currentWeatherUrl(cityName);
+    }
+
+    final response = await http.get(Uri.parse(url));
     
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      
       return WeatherModel(
         cityName: data['name'],
         temperature: data['main']['temp'].toDouble(),
@@ -29,10 +60,22 @@ class WeatherRepository {
     }
   }
   
+  // --- PRÉVISIONS (CORRIGÉ POUR LE GPS) ---
   Future<List<ForecastModel>> getForecast({String? cityName}) async {
-    final city = cityName ?? defaultCity;
+    String url;
+
+    if (cityName == null) {
+      Position? position = await _getCurrentPosition();
+      if (position != null) {
+        url = ApiConfig.forecastByLocationUrl(position.latitude, position.longitude);
+      } else {
+        url = ApiConfig.forecastUrl(defaultCity);
+      }
+    } else {
+      url = ApiConfig.forecastUrl(cityName);
+    }
     
-    final response = await http.get(Uri.parse(ApiConfig.forecastUrl(city)));
+    final response = await http.get(Uri.parse(url));
     
     if (response.statusCode == 200) {
       final data = json.decode(response.body);

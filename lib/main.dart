@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:meteo/core/services/hive_service.dart';
 import 'package:meteo/core/themes/app_themes.dart';
 import 'package:meteo/favorite/data/repositories/favorite_repository.dart';
+import 'package:meteo/home/presentation/cubit/search_cubit_cubit.dart';
 import 'package:meteo/weather/data/repositories/weather_repository.dart';
 
 // Importations des Blocs et Cubits
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => LocaleCubit()),
         BlocProvider(create: (context) => WeatherBloc(WeatherRepository())),
         BlocProvider(create: (context) => FavoriteBloc(FavoriteRepository())),
+        BlocProvider(create: (context) => SearchCubit()..loadHistory()),
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(
         builder: (context, localeState) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meteo/forecast/data/models/forecast_model.dart';
 import 'package:meteo/weather/data/models/weather_model.dart';
 import 'package:meteo/l10n/app_localizations.dart';
-import 'package:meteo/home/presentation/widgets/forecast_section.dart';
+import 'package:meteo/forecast/presentation/widgets/forecast_section.dart';
 import 'package:meteo/home/presentation/widgets/detail_item.dart';
 
 class WeatherContent extends StatefulWidget {

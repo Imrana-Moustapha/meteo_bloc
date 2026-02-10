@@ -14,7 +14,7 @@ class HomeContentScreen extends StatefulWidget {
 
 class _HomeContentScreenState extends State<HomeContentScreen> {
   final TextEditingController _cityController = TextEditingController();
-  String _currentCity = "Niger";
+  String _currentCity = "Niamey";
 
   @override
   void initState() {
@@ -90,17 +90,17 @@ class _HomeContentScreenState extends State<HomeContentScreen> {
     final t = AppLocalizations.of(context)!; // Initialisation des traductions
     
     setState(() {
-      _currentCity = "Niger";
+      _currentCity = "Niamey";
       _cityController.clear();
     });
 
     context.read<WeatherBloc>().add(
-      FetchWeatherWithForecastEvent(cityName: "Niger"),
+      FetchWeatherWithForecastEvent(cityName: "Niamey"),
     );
     
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Retour à Niger'), // Tu peux créer une clé t.returnDefault si tu veux traduire ceci
+        content: Text('Retour à Niamey'), // Tu peux créer une clé t.returnDefault si tu veux traduire ceci
         duration: const Duration(seconds: 1),
       ),
     );

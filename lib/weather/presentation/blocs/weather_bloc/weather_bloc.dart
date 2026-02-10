@@ -10,7 +10,7 @@ part 'weather_state.dart';
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final WeatherRepository weatherRepository;
   
-  static const String defaultCity = 'Niger';
+  static const String defaultCity = 'Niamey';
   
   WeatherBloc(this.weatherRepository) : super(WeatherInitialState()) {
     on<FetchWeatherEvent>(_onFetchWeather);

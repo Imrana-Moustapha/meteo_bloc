@@ -13,7 +13,7 @@ class FetchWeatherEvent extends WeatherEvent {
   const FetchWeatherEvent({this.cityName});
   
   @override
-  List<Object> get props => [cityName ?? 'Niger'];
+  List<Object> get props => [cityName ?? 'Niamey'];
 }
 
 class RefreshWeatherEvent extends WeatherEvent {
@@ -22,7 +22,7 @@ class RefreshWeatherEvent extends WeatherEvent {
   const RefreshWeatherEvent({this.cityName});
   
   @override
-  List<Object> get props => [cityName ?? 'Niger'];
+  List<Object> get props => [cityName ?? 'Niamey'];
 }
 
 class FetchWeatherWithForecastEvent extends WeatherEvent {
@@ -31,5 +31,5 @@ class FetchWeatherWithForecastEvent extends WeatherEvent {
   const FetchWeatherWithForecastEvent({this.cityName});
   
   @override
-  List<Object> get props => [cityName ?? 'Niger'];
+  List<Object> get props => [cityName ?? 'Niamey'];
 }

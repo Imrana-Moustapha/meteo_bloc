@@ -47,3 +47,5 @@
 	<true/>
 </dict>
 </plist>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>Cette application a besoin de votre position pour afficher la météo locale.</string>
