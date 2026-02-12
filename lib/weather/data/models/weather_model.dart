@@ -35,5 +35,5 @@ class WeatherModel {
     required this.lastUpdated,
   });
 
-  get description => null;
+  Null get description => null;
 }

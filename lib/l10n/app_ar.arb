@@ -1,6 +1,9 @@
 {
   "weatherNiger": "طقس النيجر",
   "weatherTitle": "الطقس الحالي",
+  "weatherDemain": "غداً",
+  "weatherAujourdhui": "اليوم",
+  "description": "سماء صافية",
   "@weatherTitle": {
     "description": "عنوان قسم الطقس الرئيسي"
   },
@@ -8,7 +11,6 @@
   "@temperature": {
     "description": "ملصق درجة الحرارة"
   },
-  "description": "سماء صافية",
   "@description": {
     "description": "وصف حالة السماء"
   },

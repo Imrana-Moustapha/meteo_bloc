@@ -5,12 +5,11 @@ class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen>
-with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
@@ -39,12 +38,14 @@ with SingleTickerProviderStateMixin {
       ),
     );
 
-    // Démarrer les animations
+    // Démarrer l'animation immédiatement au premier frame
     _controller.forward();
 
-    // Attendre 3 secondes puis naviguer vers l'écran principal
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, '/home');
+    // Navigation vers l'écran principal
+    Timer(const Duration(seconds: 4), () {
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
     });
   }
 
@@ -57,7 +58,11 @@ with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // On retire le resize pour éviter des calculs inutiles au démarrage
+      resizeToAvoidBottomInset: false,
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -71,13 +76,9 @@ with SingleTickerProviderStateMixin {
         ),
         child: Stack(
           children: [
-            // Effet de particules/bulles en arrière-plan
-            Positioned.fill(
-              child: CustomPaint(
-                painter: _BackgroundPainter(),
-              ),
-            ),
-            
+            // Fond avec particules
+            Positioned.fill(child: CustomPaint(painter: _BackgroundPainter())),
+
             Center(
               child: AnimatedBuilder(
                 animation: _controller,
@@ -89,14 +90,13 @@ with SingleTickerProviderStateMixin {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // Icône avec effet de brillance
+                          // Icône Soleil
                           Container(
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               gradient: RadialGradient(
                                 colors: [
-                                  // ignore: deprecated_member_use
                                   Colors.orange.shade300.withOpacity(0.8),
                                   Colors.orange.shade600,
                                 ],
@@ -107,82 +107,56 @@ with SingleTickerProviderStateMixin {
                                   blurRadius: 30,
                                   spreadRadius: 10,
                                 ),
-                                BoxShadow(
-                                  color: Colors.white.withOpacity(0.2),
-                                  blurRadius: 20,
-                                  spreadRadius: 5,
-                                ),
                               ],
                             ),
                             child: const Icon(
                               Icons.wb_sunny,
-                              size: 120,
+                              size: 100, // Réduit légèrement pour éviter overflow sur petits écrans
                               color: Colors.white,
                             ),
                           ),
-                          
-                          const SizedBox(height: 40),
-                          
-                          // Nom de l'application avec animation
+
+                          const SizedBox(height: 30),
+
+                          // Titre
                           ShaderMask(
-                            shaderCallback: (bounds) {
-                              return LinearGradient(
-                                colors: [
-                                  Colors.white,
-                                  Colors.orange.shade200,
-                                ],
-                              ).createShader(bounds);
-                            },
-                            child: Text(
+                            shaderCallback: (bounds) => LinearGradient(
+                              colors: [Colors.white, Colors.orange.shade200],
+                            ).createShader(bounds),
+                            child: const Text(
                               'WeatherApp',
                               style: TextStyle(
-                                fontSize: 42,
+                                fontSize: 40,
                                 fontWeight: FontWeight.w800,
+                                color: Colors.white,
                                 letterSpacing: 1.5,
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 10,
-                                    offset: const Offset(2, 2),
-                                  ),
-                                ],
                               ),
                             ),
                           ),
-                          
-                          const SizedBox(height: 15),
-                          
+
+                          const SizedBox(height: 10),
+
                           // Sous-titre
-                          AnimatedOpacity(
-                            opacity: _controller.value > 0.5 ? 1.0 : 0.0,
-                            duration: const Duration(milliseconds: 500),
-                            child: Text(
-                              'Votre météo en temps réel',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.white.withOpacity(0.9),
-                                fontWeight: FontWeight.w300,
-                                letterSpacing: 1.2,
-                              ),
+                          Text(
+                            'Votre météo en temps réel',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white.withOpacity(0.8),
+                              fontWeight: FontWeight.w300,
                             ),
                           ),
-                          
-                          const SizedBox(height: 60),
-                          
-                          // Indicateur de chargement
-                          AnimatedOpacity(
-                            opacity: _controller.value > 0.7 ? 1.0 : 0.0,
-                            duration: const Duration(milliseconds: 300),
-                            child: SizedBox(
-                              width: 150,
-                              child: LinearProgressIndicator(
-                                backgroundColor: Colors.white.withOpacity(0.2),
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.orange.shade300,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                                minHeight: 8,
+
+                          const SizedBox(height: 50),
+
+                          // Barre de progression
+                          SizedBox(
+                            width: 120,
+                            child: LinearProgressIndicator(
+                              backgroundColor: Colors.white.withOpacity(0.2),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.orange.shade300,
                               ),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                         ],
@@ -192,20 +166,18 @@ with SingleTickerProviderStateMixin {
                 },
               ),
             ),
-            
-            // Copyright en bas
-            Positioned(
+
+            // Copyright
+            const Positioned(
               bottom: 30,
               left: 0,
               right: 0,
-              child: Center(
-                child: Text(
-                  '© 2026 WeatherApp',
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.7),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
-                  ),
+              child: Text(
+                '© 2026 WeatherApp',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white60,
+                  fontSize: 12,
                 ),
               ),
             ),
@@ -216,7 +188,6 @@ with SingleTickerProviderStateMixin {
   }
 }
 
-// Classe pour le fond avec des particules
 class _BackgroundPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -224,17 +195,10 @@ class _BackgroundPainter extends CustomPainter {
       ..color = Colors.white.withOpacity(0.05)
       ..style = PaintingStyle.fill;
 
-    // Dessiner des cercles aléatoires en arrière-plan
     for (int i = 0; i < 15; i++) {
       final x = (i * 70) % size.width;
-      final y = (i * 50) % size.height;
-      final radius = 20 + (i % 3) * 10;
-      
-      canvas.drawCircle(
-        Offset(x.toDouble(), y.toDouble()),
-        radius.toDouble(),
-        paint,
-      );
+      final y = (i * 80) % size.height;
+      canvas.drawCircle(Offset(x, y), 25, paint);
     }
   }
 

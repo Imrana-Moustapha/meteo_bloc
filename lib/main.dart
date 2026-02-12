@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ThemeCubit()),
         BlocProvider(create: (context) => LocaleCubit()),
         BlocProvider(create: (context) => WeatherBloc(WeatherRepository())),
-        BlocProvider(create: (context) => FavoriteBloc(FavoriteRepository())),
+        BlocProvider(create: (context) => FavoriteBloc(FavoriteRepository())..add(LoadFavoritesEvent())),
         BlocProvider(create: (context) => SearchCubit()..loadHistory()),
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(

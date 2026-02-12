@@ -15,6 +15,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get weatherTitle => 'الطقس الحالي';
 
   @override
+  String get weatherDemain => 'غداً';
+
+  @override
+  String get weatherAujourdhui => 'اليوم';
+
+  @override
   String get temperature => 'درجة الحرارة';
 
   @override

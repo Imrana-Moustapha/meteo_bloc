@@ -18,19 +18,24 @@ class StateWidgets {
     if (state is WeatherLoadingState) {
       return _buildLoadingWidget(context);
     }
-    
+
     if (state is WeatherRefreshingState) {
       return _buildRefreshingWidget(context, state);
     }
-    
+
     if (state is WeatherErrorState) {
-      return _buildErrorWidget(context, state.message, onRefresh, onReturnToDefault);
+      return _buildErrorWidget(
+        context,
+        state.message,
+        onRefresh,
+        onReturnToDefault,
+      );
     }
-    
+
     if (state is WeatherLoadedState) {
       return _buildWeatherWidget(context, state, onRefresh);
     }
-    
+
     return _buildWelcomeWidget(context);
   }
 
@@ -48,7 +53,10 @@ class StateWidgets {
     );
   }
 
-  static Widget _buildRefreshingWidget(BuildContext context, WeatherRefreshingState state) {
+  static Widget _buildRefreshingWidget(
+    BuildContext context,
+    WeatherRefreshingState state,
+  ) {
     return WeatherContent(
       weather: state.weather,
       forecasts: state.forecasts,
@@ -58,7 +66,12 @@ class StateWidgets {
     );
   }
 
-  static Widget _buildErrorWidget(BuildContext context, String message, VoidCallback onRefresh, VoidCallback onReturnToDefault) {
+  static Widget _buildErrorWidget(
+    BuildContext context,
+    String message,
+    VoidCallback onRefresh,
+    VoidCallback onReturnToDefault,
+  ) {
     final t = AppLocalizations.of(context);
     return Center(
       child: Column(
@@ -68,7 +81,11 @@ class StateWidgets {
           const SizedBox(height: 20),
           Text(
             t?.weatherTitle ?? 'Erreur',
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.red),
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.red,
+            ),
           ),
           const SizedBox(height: 10),
           Padding(
@@ -81,16 +98,16 @@ class StateWidgets {
             label: Text(t?.refreshTooltip ?? 'Réessayer'),
             onPressed: onRefresh,
           ),
-          TextButton(
-            onPressed: onReturnToDefault,
-            child: Text(t?.returnDefaultTooltip ?? 'Retour'),
-          ),
         ],
       ),
     );
   }
 
-  static Widget _buildWeatherWidget(BuildContext context, WeatherLoadedState state, VoidCallback onRefresh) {
+  static Widget _buildWeatherWidget(
+    BuildContext context,
+    WeatherLoadedState state,
+    VoidCallback onRefresh,
+  ) {
     return WeatherContent(
       weather: state.weather,
       forecasts: state.forecasts,
@@ -107,11 +124,30 @@ class StateWidgets {
         children: [
           const Icon(Icons.sunny, size: 100, color: Colors.orange),
           const SizedBox(height: 20),
-          Text(t?.weatherNiger ?? 'Météo Niger', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          Text(
+            t?.weatherNiger ?? 'Météo Niger',
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40.0),
-            child: Text(t?.searchHint ?? 'Recherchez une ville', textAlign: TextAlign.center),
+            child: Text(
+              t?.searchHint ?? 'Recherchez une ville ou utilisez le GPS',
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 30),
+          ElevatedButton.icon(
+            icon: const Icon(Icons.my_location),
+            label: const Text("Ma position actuelle"),
+            onPressed: () {
+              context.read<WeatherBloc>().add(
+                const FetchWeatherWithForecastEvent(cityName: null),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            ),
           ),
         ],
       ),
@@ -124,35 +160,107 @@ class StateWidgets {
     final currentState = favoriteBloc.state;
 
     if (currentState is FavoriteLoadedState) {
-      final isAlreadyFavorite = currentState.favorites.any((fav) => fav.cityName.toLowerCase() == weather.cityName.toLowerCase());
+      final isAlreadyFavorite = currentState.favorites.any(
+        (fav) => fav.cityName.toLowerCase() == weather.cityName.toLowerCase(),
+      );
       if (isAlreadyFavorite) {
-        _showSnackBar(context, t?.alreadyInFavorites(weather.cityName) ?? 'Déjà en favoris');
+        _showSnackBar(
+          context,
+          t?.alreadyInFavorites(weather.cityName) ?? 'Déjà en favoris',
+          action: SnackBarAction(
+            label: t?.view ?? 'Voir',
+            onPressed: () => _showFavoritesDialog(
+              context,
+            ), // Affiche l'alerte même si déjà présent
+          ),
+        );
         return;
       }
     }
 
     final favorite = FavoriteModel(
-      cityId: '${weather.cityName.toLowerCase()}_${DateTime.now().millisecondsSinceEpoch}',
+      cityId:
+          '${weather.cityName.toLowerCase()}_${DateTime.now().millisecondsSinceEpoch}',
       cityName: weather.cityName,
       country: 'Niger',
-      lat: 13.5127,
-      lon: 2.1121,
+      lat: 0.0,
+      lon: 0.0,
       addedAt: DateTime.now(),
     );
 
     favoriteBloc.add(AddFavoriteEvent(favorite));
     _showSnackBar(
       context,
-      t?.addedToFavorites(weather.cityName) ?? 'Ajouté',
-      action: SnackBarAction(label: t?.view ?? 'Voir', onPressed: () => Navigator.pushNamed(context, '/favorites')),
+      t?.addedToFavorites(weather.cityName) ?? 'Ajouté aux favoris',
+      action: SnackBarAction(
+        label: t?.view ?? 'Voir',
+        onPressed: () => _showFavoritesDialog(
+          context,
+        ), // Ouvre l'AlertDialog au lieu de naviguer
+      ),
     );
   }
 
-  static void _showSnackBar(BuildContext context, String message, {bool isError = false, SnackBarAction? action}) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(message),
-      backgroundColor: isError ? Colors.red : null,
-      action: action,
-    ));
+  // --- NOUVELLE MÉTHODE : Affiche les favoris dans un AlertDialog ---
+  static void _showFavoritesDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return BlocBuilder<FavoriteBloc, FavoriteState>(
+          builder: (context, state) {
+            return AlertDialog(
+              title: const Text("Mes Favoris"),
+              content: SizedBox(
+                width: double.maxFinite,
+                child:
+                    state is FavoriteLoadedState && state.favorites.isNotEmpty
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: state.favorites.length,
+                        itemBuilder: (context, index) {
+                          final fav = state.favorites[index];
+                          return ListTile(
+                            leading: const Icon(Icons.location_city),
+                            title: Text(fav.cityName),
+                            onTap: () {
+                              context.read<WeatherBloc>().add(
+                                FetchWeatherWithForecastEvent(
+                                  cityName: fav.cityName,
+                                ),
+                              );
+                              Navigator.pop(context);
+                            },
+                          );
+                        },
+                      )
+                    : const Text("Aucun favori enregistré."),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("Fermer"),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  static void _showSnackBar(
+    BuildContext context,
+    String message, {
+    bool isError = false,
+    SnackBarAction? action,
+  }) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: isError ? Colors.red : null,
+        duration: const Duration(seconds: 2),
+        action: action,
+      ),
+    );
   }
 }

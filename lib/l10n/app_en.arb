@@ -1,6 +1,9 @@
 {
   "weatherNiger": "Niger Weather",
   "weatherTitle": "Current Weather",
+  "weatherDemain": "Tomorrow",
+  "weatherAujourdhui": "Today",
+  "description": "Clear sky",
   "@weatherTitle": {
     "description": "Main weather section title"
   },
@@ -8,7 +11,6 @@
   "@temperature": {
     "description": "Temperature label"
   },
-  "description": "Clear sky",
   "@description": {
     "description": "Sky condition description"
   },

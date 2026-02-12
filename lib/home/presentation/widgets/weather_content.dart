@@ -26,8 +26,7 @@ class WeatherContent extends StatefulWidget {
 }
 
 class _WeatherContentState extends State<WeatherContent> {
-  // Tu pourrais ajouter ici une variable d'état locale, 
-  // par exemple : bool _isFavorite = false;
+  bool _isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,8 @@ class _WeatherContentState extends State<WeatherContent> {
             ForecastSection(forecasts: widget.forecasts!),
           const SizedBox(height: 20),
           Text(
-            t?.lastUpdate(_formatTime(widget.weather.lastUpdated)) ?? 'Dernière mise à jour',
+            t?.lastUpdate(_formatTime(widget.weather.lastUpdated)) ??
+                'Dernière mise à jour',
             style: const TextStyle(color: Colors.grey, fontSize: 12),
           ),
           const SizedBox(height: 20),
@@ -58,16 +58,23 @@ class _WeatherContentState extends State<WeatherContent> {
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
+          SizedBox(
+            width: 20,
+            height: 20,
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
           SizedBox(width: 10),
-          Text('Mise à jour...', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500)),
+          Text(
+            'Mise à jour...',
+            style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w500),
+          ),
         ],
       ),
     );
   }
 
   Widget _buildMainCard(BuildContext context) {
-    final t = AppLocalizations.of(context);
+    dynamic t = AppLocalizations.of(context);
     return Card(
       elevation: 8,
       margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -80,18 +87,30 @@ class _WeatherContentState extends State<WeatherContent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.weather.cityName, 
-                  style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)
+                  widget.weather.cityName,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
+                // --- MODIFICATION ICI ---
                 IconButton(
-                  icon: const Icon(Icons.favorite_border, color: Colors.red),
-                  onPressed: widget.onAddToFavorites,
+                  icon: Icon(
+                    _isFavorite ? Icons.favorite : Icons.favorite_border, 
+                    color: Colors.red
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isFavorite = !_isFavorite;
+                    });
+                    widget.onAddToFavorites();
+                  },
                   tooltip: t?.addToFavorites ?? 'Ajouter aux favoris',
                 ),
               ],
             ),
             const SizedBox(height: 20),
-            _buildTemperatureSection(),
+            _buildTemperatureSection(t.description),
             const SizedBox(height: 30),
             _buildDetailsRow(context),
           ],
@@ -100,22 +119,23 @@ class _WeatherContentState extends State<WeatherContent> {
     );
   }
 
-  Widget _buildTemperatureSection() {
+  Widget _buildTemperatureSection(String t) {
+    
     return Column(
       children: [
         Icon(
-          _getWeatherIcon(widget.weather.condition), 
-          size: 80, 
-          color: Colors.orange
+          _getWeatherIcon(widget.weather.condition),
+          size: 80,
+          color: Colors.orange,
         ),
         const SizedBox(height: 10),
         Text(
-          '${widget.weather.temperature.toStringAsFixed(1)}°C', 
-          style: const TextStyle(fontSize: 64, fontWeight: FontWeight.w300)
+          '${widget.weather.temperature.toStringAsFixed(1)}°C',
+          style: const TextStyle(fontSize: 64, fontWeight: FontWeight.w300),
         ),
         Text(
-          widget.weather.condition.toUpperCase(), 
-          style: const TextStyle(fontSize: 18, color: Colors.grey)
+          t.toUpperCase(),
+          style: const TextStyle(fontSize: 18, color: Colors.grey),
         ),
       ],
     );
@@ -127,19 +147,19 @@ class _WeatherContentState extends State<WeatherContent> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         DetailItem(
-          icon: Icons.air, 
-          title: t?.windSpeed ?? 'Vent', 
-          value: '${widget.weather.windSpeed.toStringAsFixed(1)} km/h'
+          icon: Icons.air,
+          title: t?.windSpeed ?? 'Vent',
+          value: '${widget.weather.windSpeed.toStringAsFixed(1)} km/h',
         ),
         DetailItem(
-          icon: Icons.water_drop, 
-          title: t?.humidity ?? 'Humidité', 
-          value: '${widget.weather.humidity}%'
+          icon: Icons.water_drop,
+          title: t?.humidity ?? 'Humidité',
+          value: '${widget.weather.humidity}%',
         ),
         DetailItem(
-          icon: Icons.thermostat, 
-          title: t?.feelsLike ?? 'Ressenti', 
-          value: '${(widget.weather.temperature - 2).toStringAsFixed(1)}°C'
+          icon: Icons.thermostat,
+          title: t?.feelsLike ?? 'Ressenti',
+          value: '${(widget.weather.temperature - 2).toStringAsFixed(1)}°C',
         ),
       ],
     );

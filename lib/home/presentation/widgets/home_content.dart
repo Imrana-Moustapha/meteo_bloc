@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meteo/l10n/app_localizations.dart';
 import 'package:meteo/weather/presentation/blocs/weather_bloc/weather_bloc.dart';
 import 'package:meteo/home/presentation/widgets/search_bar.dart';
 import 'package:meteo/home/presentation/widgets/state_widgets.dart';
@@ -14,7 +13,7 @@ class HomeContentScreen extends StatefulWidget {
 
 class _HomeContentScreenState extends State<HomeContentScreen> {
   final TextEditingController _cityController = TextEditingController();
-  String _currentCity = "Niamey";
+  String? _currentCity; 
 
   @override
   void initState() {
@@ -25,7 +24,7 @@ class _HomeContentScreenState extends State<HomeContentScreen> {
 
         if (weatherBloc.state is! WeatherLoadedState) {
           weatherBloc.add(
-            FetchWeatherWithForecastEvent(cityName: _currentCity),
+            const FetchWeatherWithForecastEvent(cityName: null),
           );
         }
       }
@@ -48,9 +47,9 @@ class _HomeContentScreenState extends State<HomeContentScreen> {
           children: [
             SearchBarWidget(
               controller: _cityController,
-              currentCity: _currentCity,
+              currentCity: _currentCity ?? "",
               onSearch: (city) => _searchWeather(context, city),
-              onReturnToDefault: () => _returnToDefaultCity(context),
+              onReturnToDefault: () => _returnToGPS(context),
             ),
 
             const SizedBox(height: 20),
@@ -61,9 +60,9 @@ class _HomeContentScreenState extends State<HomeContentScreen> {
                   return StateWidgets.build(
                     context: context,
                     state: state,
-                    currentCity: _currentCity,
+                    currentCity: _currentCity ?? "",
                     onRefresh: () => _refreshWeather(context),
-                    onReturnToDefault: () => _returnToDefaultCity(context),
+                    onReturnToDefault: () => _returnToGPS(context),
                   );
                 },
               ),
@@ -86,22 +85,20 @@ class _HomeContentScreenState extends State<HomeContentScreen> {
     }
   }
 
-  void _returnToDefaultCity(BuildContext context) {
-    final t = AppLocalizations.of(context)!; // Initialisation des traductions
-    
+  void _returnToGPS(BuildContext context) {
     setState(() {
-      _currentCity = "Niamey";
+      _currentCity = null;
       _cityController.clear();
     });
 
     context.read<WeatherBloc>().add(
-      FetchWeatherWithForecastEvent(cityName: "Niamey"),
+      const FetchWeatherWithForecastEvent(cityName: null),
     );
     
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Retour à Niamey'), // Tu peux créer une clé t.returnDefault si tu veux traduire ceci
-        duration: const Duration(seconds: 1),
+      const SnackBar(
+        content: Text('Détection de votre position...'),
+        duration: Duration(seconds: 1),
       ),
     );
   }

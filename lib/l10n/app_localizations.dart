@@ -112,6 +112,18 @@ abstract class AppLocalizations {
   /// **'Météo Actuelle'**
   String get weatherTitle;
 
+  /// No description provided for @weatherDemain.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demain'**
+  String get weatherDemain;
+
+  /// No description provided for @weatherAujourdhui.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aujourd\'hui'**
+  String get weatherAujourdhui;
+
   /// Label pour la température
   ///
   /// In fr, this message translates to:

@@ -15,6 +15,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get weatherTitle => 'Current Weather';
 
   @override
+  String get weatherDemain => 'Tomorrow';
+
+  @override
+  String get weatherAujourdhui => 'Today';
+
+  @override
   String get temperature => 'Temperature';
 
   @override

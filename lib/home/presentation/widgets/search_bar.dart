@@ -28,10 +28,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   final LayerLink _layerLink = LayerLink();
   OverlayEntry? _overlayEntry;
 
-  // Plus de initState ici pour charger l'historique, c'est géré par le Cubit
-
   void _showOverlay() {
-    // On accède à l'historique via le Cubit
     final history = context.read<SearchCubit>().state.history;
     if (history.isEmpty || _overlayEntry != null) return;
     _overlayEntry = _createOverlayEntry();
@@ -53,12 +50,9 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
         child: CompositedTransformFollower(
           link: _layerLink,
           offset: Offset(0, size.height + 8),
-          // On utilise BlocBuilder ici pour que l'overlay se mette à jour 
-          // quand on supprime un élément de l'historique
           child: BlocBuilder<SearchCubit, SearchState>(
             builder: (context, state) {
               if (state.history.isEmpty) {
-                // Si on supprime tout, on cache l'overlay proprement
                 WidgetsBinding.instance.addPostFrameCallback((_) => _hideOverlay());
                 return const SizedBox.shrink();
               }
@@ -123,7 +117,6 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   _hideOverlay();
                   widget.onSearch(value);
                 },
-                // ... reste de ta déco
               ),
             ),
             IconButton(

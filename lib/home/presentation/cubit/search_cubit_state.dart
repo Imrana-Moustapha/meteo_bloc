@@ -4,5 +4,5 @@ abstract class SearchState {
 }
 
 class SearchHistoryLoaded extends SearchState {
-  SearchHistoryLoaded(List<String> history) : super(history);
+  SearchHistoryLoaded(super.history);
 }

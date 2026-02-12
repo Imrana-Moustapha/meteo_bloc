@@ -1,6 +1,8 @@
 {
   "weatherNiger": "Météo Niger",
   "weatherTitle": "Météo Actuelle",
+  "weatherDemain": "Demain",
+  "weatherAujourdhui": "Aujourd'hui",
   "@weatherTitle": {
     "description": "Titre de la section météo principale"
   },

@@ -7,7 +7,8 @@ plugins {
 
 android {
     namespace = "com.example.meteo"
-    compileSdk = flutter.compileSdkVersion
+    // Mis à jour à 36 pour supporter les nouvelles versions des plugins (connectivity_plus, etc.)
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -20,20 +21,17 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.meteo"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        // On s'assure que le minSdk est au moins à 21 (géré par flutter.minSdkVersion)
         minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        // Mis à jour à 36 pour s'aligner sur le compileSdk
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
         }
     }

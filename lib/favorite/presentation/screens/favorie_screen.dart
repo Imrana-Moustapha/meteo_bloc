@@ -8,17 +8,10 @@ class FavoritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Favoris'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
       body: BlocBuilder<FavoriteBloc, FavoriteState>(
         builder: (context, state) {
           if (state is FavoriteLoadingState) {
-            return const Center(child: const Text('Chargement des favoris...'));
+            return const Center(child: Text('Chargement des favoris...'));
           }
           
           if (state is FavoriteErrorState) {
